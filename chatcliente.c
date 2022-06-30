@@ -1,7 +1,13 @@
-#include <stdio.h>
+#include <stdio.h> 
+#include <stdlib.h> 
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <unistd.h> 
+#include <string.h>
+#include <arpa/inet.h>
+
+
 
 int main(int argc, char *argv[]){
 
@@ -9,14 +15,14 @@ int main(int argc, char *argv[]){
     char ip[16];
     int fd, numbytes, puerto;
     char buf[1024];
+    char enviar[1024];
 
     system("clear");
-
     printf("ingrese la ip del servidor \n");
     scanf("%s", ip);
 
-    printf("ingrese la ip del servidor\n");
-    scanf("%s",ip);
+    printf("ingrese el puerto de conexion\n");
+    scanf("%d",&puerto);
 
     if((fd=socket(AF_INET, SOCK_STREAM, 0)) == -1){
         printf("socket() error\n");
@@ -53,7 +59,7 @@ int main(int argc, char *argv[]){
       if(strcmp(buf, "salir") == 0){
         break;
       }
-      printg("Servidor: %s\n",buf);
+      printf("Servidor: %s\n",buf);
     }
     close(fd);
     

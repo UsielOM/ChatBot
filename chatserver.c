@@ -3,12 +3,14 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <string.h>
+#include <stdlib.h>
+#include <unistd.h> 
 
 int main (int atgc, char **argv){
 
     struct sockaddr_in server;
-    struct sockaddr_in cliente;
-    int fd,fs2,longitud_cliente,numbytes,puerto;
+    struct sockaddr_in client;
+    int fd,fd2,longitud_cliente,numbytes,puerto;
     char buf[1024]; 
     char enviar2[1024];
     char enviar[1024];
@@ -20,7 +22,7 @@ int main (int atgc, char **argv){
     server.sin_family = AF_INET;
     server.sin_port = htons(puerto);
     server.sin_addr.s_addr = INADDR_ANY;
-    bzero(&(server.sin_zero),9);
+    bzero(&(server.sin_zero),8);
 
     if((fd=socket(AF_INET,SOCK_STREAM,0))<0){
         perror("Error de apertura de socket");
@@ -51,7 +53,7 @@ int main (int atgc, char **argv){
     while (1)
     {
         recv(fd2,buf,1024,0);
-        if(strcmp(&buf,"salir") == 0){
+        if(strcmp(buf,"salir") == 0){
             break;
         }
 
@@ -67,6 +69,6 @@ int main (int atgc, char **argv){
 
     close(fd2);
     close(fd);
-    return 0
+    return 0;
     
 }
